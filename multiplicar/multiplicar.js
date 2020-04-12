@@ -1,7 +1,7 @@
 // imports
 const fileSystem = require('fs');
 
-let crearArchivo = (base) => {
+let construirTabla = (base, limite) => {
     return new Promise((resolve, reject) => {
         if (!Number(base)) {
             reject(`La base \'${base}\' no es un número.`);
@@ -9,19 +9,34 @@ let crearArchivo = (base) => {
         }
         let data = '';
 
-        for (let j = 1; j <= 10; j++) {
+        for (let j = 1; j <= limite; j++) {
             if (j === 1) data += `Tabla del ${base}\n`;
             data += `\t${base} * ${j} = ${base*j}\n`;
-            if (j === 10) data += `\n`;
         }
-
-        fileSystem.writeFile(`./tablas/tabla-${base}.txt`, data, (err) => {
-            if (err) reject(err);
-            resolve(`tabla-${base}.txt`);
-        });
+        resolve(data);
     });
 };
 
+let crearArchivo = (base, limite) => {
+    return new Promise((resolve, reject) => {
+        construirTabla(base, limite)
+            .then(data => {
+                fileSystem.writeFile(`./tablas/tabla-${base}.txt`, data, (err) => {
+                    if (err) reject(err);
+                    resolve(`tabla-${base}.txt`);
+                });
+            })
+            .catch(e => console.log(e));
+    });
+};
+
+let listarTabla = (base, limite) => {
+    construirTabla(base, limite)
+        .then(data => console.log(data))
+        .catch(e => console.log(e));
+};
+
 module.exports = {
-    crearArchivo
+    crearArchivo,
+    listarTabla
 };

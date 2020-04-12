@@ -12,14 +12,22 @@ const argv = require('yargs')
     })
     .help()
     .argv;
-const { crearArchivo } = require('./multiplicar/multiplicar');
+const { crearArchivo, listarTabla } = require('./multiplicar/multiplicar');
 
-// let base = process.argv[2].split('=')[1];
+// Commands
 
-console.log(argv.base);
-console.log(argv.limite);
+switch (argv._[0]) {
+    case 'listar':
+        listarTabla(argv.base, argv.limite);
+        break;
 
+    case 'crear':
+        crearArchivo(argv.base, argv.limite)
+            .then(archivo => console.log(`El archivo ${archivo} ha sido creado.`))
+            .catch(err => console.log(err));
+        break;
 
-// crearArchivo(argv.base)
-//     .then(archivo => console.log(`El archivo ${archivo} ha sido creado.`))
-//     .catch(err => console.log(err));
+    default:
+        console.log('Comando no reconocido');
+        break;
+}
