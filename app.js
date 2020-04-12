@@ -2,7 +2,7 @@
 
 const { crearArchivo } = require('./multiplicar/multiplicar');
 
-let base = '7';
+let base = process.argv[2].split('=')[1];
 
 crearArchivo(base)
     .then(archivo => console.log(`El archivo ${archivo} ha sido creado.`))
