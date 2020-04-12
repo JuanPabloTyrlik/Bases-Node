@@ -1,19 +1,9 @@
-// Required
-const fileSystem = require('fs');
+// Imports
 
-let data = '';
+const { crearArchivo } = require('./multiplicar/multiplicar');
 
-for (let i = 1; i <= 10; i++) {
-    for (let j = 1; j <= 10; j++) {
-        if (j === 1) data += `### Tabla del ${i}
-    `;
-        data += `${i} * ${j} = ${i*j}
-    `;
-        if (j === 10) data += `\n`;
-    }
-}
+let base = '7';
 
-fileSystem.writeFile('tablas.md', data, (err) => {
-    if (err) throw err;
-    console.log('El archivo tablas.md fue creado');
-});
+crearArchivo(base)
+    .then(archivo => console.log(`El archivo ${archivo} ha sido creado.`))
+    .catch(err => console.log(err));
