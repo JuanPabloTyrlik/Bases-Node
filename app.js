@@ -1,7 +1,7 @@
 // Imports
 const { argv } = require('./config/yargs');
 const { crearArchivo, listarTabla } = require('./multiplicar/multiplicar');
-
+const colors = require('colors/safe');
 // Commands
 
 switch (argv._[0]) {
@@ -11,7 +11,7 @@ switch (argv._[0]) {
 
     case 'crear':
         crearArchivo(argv.base, argv.limite)
-            .then(archivo => console.log(`El archivo ${archivo} ha sido creado.`))
+            .then(archivo => console.log(`El archivo ${colors.green(archivo)} ha sido creado.`))
             .catch(err => console.log(err));
         break;
 
